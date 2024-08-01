@@ -153,7 +153,7 @@ async function getDownloadUrl(downloadPageUrl) {
   
   const org = process.env.ORG;
   const repo = process.env.REPO;
-  const bundle = rocess.env.BUNDLE === 'true' || process.env.BUNDLE === undefined;
+  const bundle = process.env.BUNDLE === 'true' || process.env.BUNDLE === undefined;
 
 const variants = await getVariants(org, repo, process.env.VERSION || await getStableLatestVersion(org, repo), bundle);
 const dlurl = await getDownloadUrl(variants[0].url)
