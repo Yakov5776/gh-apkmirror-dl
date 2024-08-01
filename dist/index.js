@@ -857,11 +857,11 @@ async function getDownloadUrl(downloadPageUrl) {
     }
   }
   
-  const org = process.env.ORG;
-  const repo = process.env.REPO;
-  const bundle = process.env.BUNDLE === 'true' || process.env.BUNDLE === undefined;
+  const org = process.env['INPUT_ORG'];
+  const repo = process.env['INPUT_REPO'];
+  const bundle = process.env['INPUT_BUNDLE'];
 
-const variants = await getVariants(org, repo, process.env.VERSION || await getStableLatestVersion(org, repo), bundle);
+const variants = await getVariants(org, repo, process.env['INPUT_VERSION'] || await getStableLatestVersion(org, repo), bundle);
 const dlurl = await getDownloadUrl(variants[0].url)
 await downloadAPK(dlurl, repo)
 __webpack_async_result__();
