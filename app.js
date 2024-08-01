@@ -121,39 +121,32 @@ export async function getVariants(org, repo, version, bundle) {
 
 async function downloadAPK(url, name) {
     const response = await fetchHeaders(url);
-    
-    const contentType = response.headers.get("Content-Type");
-    const isAPK = contentType == "application/vnd.android.package-archive";
-    
-    // content type for apkm is application/octet-stream, so at least we can check for extension then
-    var isAPKM = false;
-    const apkmRegex = /.*\/(.*apkmirror.com.apkm)/;
-    if (response.url.match(apkmRegex) != null) {
-        isAPKM = true;
-    }
-    
-    var ext;
-    if (isAPKM) {
-        ext = "apkm";
-    } else if (isAPK) {
-        ext = "apk";
-    }
-    var path = `${name}.${ext}`;
-    
+    let filename = name;
+
+    const finalUrl = response.url;
+    const urlObj = new URL(finalUrl);
+    const pathname = urlObj.pathname;
+    const lastSegment = pathname.split('/').pop();
+    const defaultFilename = decodeURIComponent(lastSegment.split('?')[0]);
+
+    if (!filename) filename = defaultFilename
+
     const body = response.body;
+    let isAPK = filename.endsWith('.apk') || filename.endsWith('.apkm');
     
-    if (body != null && (isAPK || isAPKM)) {
-        const fileStream = createWriteStream(path, { flags: "w" });
+    if (body != null && isAPK) {
+        const fileStream = createWriteStream(filename, { flags: "w" });
         await finished(Readable.fromWeb(body).pipe(fileStream));
     } else {
-        throw new Error("An error occured while trying to download the file");
+        throw new Error("An error occurred while trying to download the file");
     }
 }
 
 const org = process.env['INPUT_ORG'];
 const repo = process.env['INPUT_REPO'];
 const bundle = process.env['INPUT_BUNDLE'];
+const name = process.env['INPUT_FILE_NAME'];
 
 const variants = await getVariants(org, repo, process.env['INPUT_VERSION'] || await getStableLatestVersion(org, repo), bundle);
 const dlurl = await getDownloadUrl(variants[0].url)
-await downloadAPK(dlurl, repo)
+await downloadAPK(dlurl, name)

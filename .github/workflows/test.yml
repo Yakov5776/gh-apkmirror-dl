@@ -18,6 +18,7 @@ jobs:
             repo: ${{ env.APP_NAME }}
             version: '3.96'
             bundle: false
+            file_name: ${{ env.APP_NAME }}.apk
 
       - name: Verify Download
         run: |
