@@ -1,0 +1,20 @@
+name: Download APK from APKMirror
+description: 'Download APK from APKMirror'
+inputs:
+    org:
+      description: 'Organization name'
+      required: true
+    repo:
+      description: 'Repository name'
+      required: true
+    version:
+      description: 'Version of the app'
+      required: false
+    bundle:
+      description: 'Use bundle'
+      required: false
+      default: 'true'
+
+runs:
+  using: 'node20'
+  main: 'app.js'
