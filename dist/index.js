@@ -790,7 +790,7 @@ async function getVariants(org, repo, version, bundle) {
     const $ = cheerio__WEBPACK_IMPORTED_MODULE_0__/* ["default"].load */ .ZP.load(html);
     
     var rows;
-    if (bundle) {
+    if (bundle === true || bundle === 'true') {
         rows = $('.variants-table .table-row:has(span.apkm-badge:contains("BUNDLE"))');
     } else {
         rows = $('.variants-table .table-row:has(span.apkm-badge:contains("APK"))');
@@ -877,7 +877,6 @@ __webpack_async_result__();
 // fetch.js
 const fetchHeaders = async (url, args = {}) => {
   args.headers = args.headers || {}
-  args.headers['user-agent'] = 'my own'
   args.headers['user-agent'] = 'APKUpdater-v0'
   args.headers['authorization'] = 'Basic YXBpLWFwa3VwZGF0ZXI6cm01cmNmcnVVakt5MDRzTXB5TVBKWFc4'
   return fetch(url, args)
