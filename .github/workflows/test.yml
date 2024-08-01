@@ -27,7 +27,7 @@ jobs:
                 echo "Error: File does not exist"
                 exit 1
               fi
-              EXPECTED_HASH="FE5305DD0A8A8ACBD17CFA217F8CAC97FF206B8CFB6D0DB5B50D7E68913FFF5ED1E8B0504BF41BA84C2A00C967708B611E6F970955D5922498DCD0CDC8C7D986"
+              EXPECTED_HASH="fe5305dd0a8a8acbd17cfa217f8cac97ff206b8cfb6d0db5b50d7e68913fff5ed1e8b0504bf41ba84c2a00c967708b611e6f970955d5922498dcd0cdc8c7d986"
               ACTUAL_HASH=$(sha512sum "$FILE_NAME" | awk '{ print $1 }')
               
               if [ "$EXPECTED_HASH" != "$ACTUAL_HASH" ]; then
