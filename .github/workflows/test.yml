@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Test Download
-        uses: ./action.yml
+        uses: ./
         with:
             org: ${{ env.APP_NAME }}
             repo: ${{ env.APP_NAME }}
