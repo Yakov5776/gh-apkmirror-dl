@@ -21,6 +21,7 @@ jobs:
 
       - name: Verify Download
         run: |
+              ls -la
               FILE_NAME="${{ env.APP_NAME }}.apk"
           
               if [ ! -f "$FILE_PATH" ]; then
