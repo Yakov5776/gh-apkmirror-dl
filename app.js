@@ -84,7 +84,7 @@ export async function getVariants(org, repo, version, bundle) {
     const $ = cheerio.load(html);
     
     var rows;
-    if (bundle) {
+    if (bundle === true || bundle === 'true') {
         rows = $('.variants-table .table-row:has(span.apkm-badge:contains("BUNDLE"))');
     } else {
         rows = $('.variants-table .table-row:has(span.apkm-badge:contains("APK"))');
