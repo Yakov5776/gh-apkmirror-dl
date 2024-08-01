@@ -81,7 +81,6 @@ async function getDownloadUrl(downloadPageUrl) {
   
     const response = await fetchHeaders(apkmUrl);
     const html = await response.text();
-    console.log(html)
     const $ = cheerio.load(html);
   
     var rows;
