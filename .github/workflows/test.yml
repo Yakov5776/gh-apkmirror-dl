@@ -21,15 +21,14 @@ jobs:
 
       - name: Verify Download
         run: |
-              ls -la
               FILE_NAME="${{ env.APP_NAME }}.apk"
           
-              if [ ! -f "$FILE_PATH" ]; then
+              if [ ! -f "$FILE_NAME" ]; then
                 echo "Error: File does not exist"
                 exit 1
               fi
               EXPECTED_HASH="FE5305DD0A8A8ACBD17CFA217F8CAC97FF206B8CFB6D0DB5B50D7E68913FFF5ED1E8B0504BF41BA84C2A00C967708B611E6F970955D5922498DCD0CDC8C7D986"
-              ACTUAL_HASH=$(sha512sum "$FILE_PATH" | awk '{ print $1 }')
+              ACTUAL_HASH=$(sha512sum "$FILE_NAME" | awk '{ print $1 }')
               
               if [ "$EXPECTED_HASH" != "$ACTUAL_HASH" ]; then
                 echo "Hash mismatch: expected $EXPECTED_HASH but got $ACTUAL_HASH"
