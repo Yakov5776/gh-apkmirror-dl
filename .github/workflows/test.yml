@@ -1,0 +1,38 @@
+name: Test Workflow
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+     APP_NAME: 'fidelity-investments'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Test Download
+        uses: ./
+        with:
+            org: ${{ env.APP_NAME }}
+            repo: ${{ env.APP_NAME }}
+            version: '3.96'
+            bundle: false
+
+      - name: Verify Download
+        run: |
+              FILE_NAME="${{ env.APP_NAME }}.apk"
+          
+              if [ ! -f "$FILE_NAME" ]; then
+                echo "Error: File does not exist"
+                exit 1
+              fi
+              EXPECTED_HASH="fe5305dd0a8a8acbd17cfa217f8cac97ff206b8cfb6d0db5b50d7e68913fff5ed1e8b0504bf41ba84c2a00c967708b611e6f970955d5922498dcd0cdc8c7d986"
+              ACTUAL_HASH=$(sha512sum "$FILE_NAME" | awk '{ print $1 }')
+              
+              if [ "$EXPECTED_HASH" != "$ACTUAL_HASH" ]; then
+                echo "Hash mismatch: expected $EXPECTED_HASH but got $ACTUAL_HASH"
+                exit 1
+              else
+                echo "Hash verification passed."
+              fi
