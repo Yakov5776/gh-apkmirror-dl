@@ -1,6 +1,6 @@
 # gh-apkmirror-dl
 This GitHub Action allows you to download APK files from APKMirror.
-It supports specifying the organization, repository, app version, and whether to use a bundle.
+It supports specifying the organization, repository, app version, whether to use a bundle, and the file name.
 
 Credits to [@tanishqmanuja](https://github.com/tanishqmanuja) for the initial apkmirror scraping code.
 
@@ -16,8 +16,10 @@ Credits to [@tanishqmanuja](https://github.com/tanishqmanuja) for the initial ap
         file_name: 'fidelity.apk'
 ```
 
-**Optional Parameters:**
+**Parameters:**
 
-- **version:** Defaults to the latest version.
-- **bundle:** Defaults to `true` if not provided.
-- **file_name:** Defaults to the file name provided by the server if not specified.
+- **org:** The organization name on **APKMirror**.
+- **repo:** The repository name on **APKMirror**.
+- **version:** (Optional) The version of the app you want to download, defaults to the latest version if not specified.
+- **bundle:** (Optional) Whether to use the app bundle instead of the APK file, defaults to `true` if not specified.
+- **file_name:** (Optional) Defaults to the file name provided by the server if not specified.
