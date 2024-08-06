@@ -14,7 +14,7 @@ inputs:
       description: 'Use bundle'
       required: false
       default: 'true'
-    file_name:
+    filename:
       description: 'The file name'
       required: false
 

@@ -851,7 +851,7 @@ async function downloadAPK(url, name) {
 const org = process.env['INPUT_ORG'];
 const repo = process.env['INPUT_REPO'];
 const bundle = process.env['INPUT_BUNDLE'];
-const name = process.env['INPUT_FILE_NAME'];
+const name = process.env['INPUT_FILENAME'];
 
 const variants = await getVariants(org, repo, process.env['INPUT_VERSION'] || await getStableLatestVersion(org, repo), bundle);
 const dlurl = await getDownloadUrl(variants[0].url)
