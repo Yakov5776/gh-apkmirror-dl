@@ -27472,7 +27472,10 @@ const name = _actions_core__WEBPACK_IMPORTED_MODULE_4__.getInput('filename');
 
 const variants = await getVariants(org, repo, version || await getStableLatestVersion(org, repo), bundle);
 const dlurl = await getDownloadUrl(variants[0].url)
-await downloadAPK(dlurl, name)
+const out = await downloadAPK(dlurl, name)
+
+_actions_core__WEBPACK_IMPORTED_MODULE_4__.setOutput('filename', out);
+_actions_core__WEBPACK_IMPORTED_MODULE_4__.info(`${repo} Successfully downloaded to '${out}'!`);
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 

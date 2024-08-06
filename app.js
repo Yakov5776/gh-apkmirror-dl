@@ -153,4 +153,7 @@ const name = core.getInput('filename');
 
 const variants = await getVariants(org, repo, version || await getStableLatestVersion(org, repo), bundle);
 const dlurl = await getDownloadUrl(variants[0].url)
-await downloadAPK(dlurl, name)
+const out = await downloadAPK(dlurl, name)
+
+core.setOutput('filename', out);
+core.info(`${repo} Successfully downloaded to '${out}'!`);
