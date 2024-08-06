@@ -3,6 +3,8 @@ import { fetchHeaders } from "./fetch.js";
 import {createWriteStream} from 'fs'
 import { Readable } from "stream";
 import { finished } from "stream/promises";
+import * as core from "@actions/core";
+
 const BASE_URL = "https://www.apkmirror.com";
 
 
@@ -84,7 +86,7 @@ export async function getVariants(org, repo, version, bundle) {
     const $ = cheerio.load(html);
     
     var rows;
-    if (bundle === true || bundle === 'true') {
+    if (bundle) {
         rows = $('.variants-table .table-row:has(span.apkm-badge:contains("BUNDLE"))');
     } else {
         rows = $('.variants-table .table-row:has(span.apkm-badge:contains("APK"))');
@@ -137,16 +139,18 @@ async function downloadAPK(url, name) {
     if (body != null && isAPK) {
         const fileStream = createWriteStream(filename, { flags: "w" });
         await finished(Readable.fromWeb(body).pipe(fileStream));
+        return filename;
     } else {
         throw new Error("An error occurred while trying to download the file");
     }
 }
 
-const org = process.env['INPUT_ORG'];
-const repo = process.env['INPUT_REPO'];
-const bundle = process.env['INPUT_BUNDLE'];
-const name = process.env['INPUT_FILENAME'];
+const org = core.getInput('org', { required: true });
+const repo = core.getInput('repo', { required: true });
+const version = core.getInput('version');
+const bundle = core.getBooleanInput('bundle');
+const name = core.getInput('filename');
 
-const variants = await getVariants(org, repo, process.env['INPUT_VERSION'] || await getStableLatestVersion(org, repo), bundle);
+const variants = await getVariants(org, repo, version || await getStableLatestVersion(org, repo), bundle);
 const dlurl = await getDownloadUrl(variants[0].url)
 await downloadAPK(dlurl, name)
