@@ -13,7 +13,7 @@ Credits to [@tanishqmanuja](https://github.com/tanishqmanuja) for the initial ap
         repo: 'fidelity-investments'
         version: '3.96'
         bundle: false
-        file_name: 'fidelity.apk'
+        filename: 'fidelity.apk'
 ```
 
 **Parameters:**
@@ -22,4 +22,4 @@ Credits to [@tanishqmanuja](https://github.com/tanishqmanuja) for the initial ap
 - **repo:** The repository name on **APKMirror**.
 - **version:** (Optional) The version of the app you want to download, defaults to the latest version if not specified.
 - **bundle:** (Optional) Whether to use the app bundle instead of the APK file, defaults to `true` if not specified.
-- **file_name:** (Optional) Defaults to the file name provided by the server if not specified.
+- **filename:** (Optional) Defaults to the file name provided by the server if not specified.
