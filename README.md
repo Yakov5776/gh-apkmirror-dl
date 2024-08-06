@@ -23,3 +23,7 @@ Credits to [@tanishqmanuja](https://github.com/tanishqmanuja) for the initial ap
 - **version:** (Optional) The version of the app you want to download, defaults to the latest version if not specified.
 - **bundle:** (Optional) Whether to use the app bundle instead of the APK file, defaults to `true` if not specified.
 - **filename:** (Optional) Defaults to the file name provided by the server if not specified.
+
+**Outputs:**
+
+- **filename:** The filename the app was downloaded as, which will return the file name provided by the server if not overridden by the parameter.
