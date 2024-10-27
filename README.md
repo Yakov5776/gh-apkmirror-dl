@@ -7,7 +7,7 @@ Credits to [@tanishqmanuja](https://github.com/tanishqmanuja) for the initial ap
 
 ## Example Usage
 ```yml
--  uses: Yakov5776/gh-apkmirror-dl@v1.2
+-  uses: Yakov5776/gh-apkmirror-dl@v1.3
        with:
         org: 'fidelity-investments'
         repo: 'fidelity-investments'
