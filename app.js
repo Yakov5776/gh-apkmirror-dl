@@ -1,4 +1,4 @@
-import cheerio from "cheerio";
+import { load } from "cheerio";
 import { fetchHeaders } from "./fetch.js";
 import {createWriteStream} from 'fs'
 import { Readable } from "stream";
@@ -14,7 +14,7 @@ async function getHtmlForApkMirror(url) {
 
 async function getDownloadPageUrl(downloadPageUrl) {
     const html = await getHtmlForApkMirror(downloadPageUrl);
-    const $ = cheerio.load(html);
+    const $ = load(html);
     
     const downloadUrl = $(`a.downloadButton`).attr("href");
     
@@ -27,7 +27,7 @@ async function getDownloadPageUrl(downloadPageUrl) {
 
 async function getDirectDownloadUrl(downloadPageUrl) {
     const html = await getHtmlForApkMirror(downloadPageUrl);
-    const $ = cheerio.load(html);
+    const $ = load(html);
     
     const downloadUrl = $(`.card-with-tabs a[href]`).attr("href");
     
@@ -50,7 +50,7 @@ async function getStableLatestVersion(org, repo) {
     
     const response = await fetchHeaders(apkmUrl);
     const html = await response.text();
-    const $ = cheerio.load(html);
+    const $ = load(html);
     
     const versions = $(
         `#primary > div.listWidget.p-relative > div > div.appRow > div > div:nth-child(2) > div > h5 > a`
@@ -83,7 +83,7 @@ export async function getVariants(org, repo, version, bundle) {
     
     const response = await fetchHeaders(apkmUrl);
     const html = await response.text();
-    const $ = cheerio.load(html);
+    const $ = load(html);
     
     var rows;
     if (bundle) {
