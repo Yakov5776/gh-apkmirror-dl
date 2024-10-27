@@ -20,6 +20,7 @@ inputs:
     overwrite:
       description: 'Overwrite file'
       required: false
+      default: 'true'
 
 runs:
   using: 'node20'
