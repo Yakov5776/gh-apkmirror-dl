@@ -17,6 +17,9 @@ inputs:
     filename:
       description: 'The file name'
       required: false
+    overwrite:
+      description: 'Overwrite file'
+      required: false
 
 runs:
   using: 'node20'
