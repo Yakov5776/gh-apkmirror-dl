@@ -1,6 +1,6 @@
 import { load } from "cheerio";
 import { fetchHeaders } from "./fetch.js";
-import {createWriteStream} from 'fs'
+import {createWriteStream, existsSync} from 'fs'
 import { Readable } from "stream";
 import { finished } from "stream/promises";
 import * as core from "@actions/core";
@@ -121,7 +121,7 @@ export async function getVariants(org, repo, version, bundle) {
     return parsedData;
 }
 
-async function downloadAPK(url, name) {
+async function downloadAPK(url, name, overwrite = true) {
     const response = await fetchHeaders(url);
     let filename = name;
 
@@ -132,6 +132,11 @@ async function downloadAPK(url, name) {
     const defaultFilename = decodeURIComponent(lastSegment.split('?')[0]);
 
     if (!filename) filename = defaultFilename
+    if (existsSync(filename) && overwrite === false)
+    {
+        core.info('download has been skipped because file already exists!');
+        return;
+    }
 
     const body = response.body;
     let isAPK = filename.endsWith('.apk') || filename.endsWith('.apkm');
@@ -150,10 +155,14 @@ const repo = core.getInput('repo', { required: true });
 const version = core.getInput('version');
 const bundle = core.getBooleanInput('bundle');
 const name = core.getInput('filename');
+const overwrite = core.getBooleanInput('overwrite') ?? true;
 
 const variants = await getVariants(org, repo, version || await getStableLatestVersion(org, repo), bundle);
 const dlurl = await getDownloadUrl(variants[0].url)
-const out = await downloadAPK(dlurl, name)
+const out = await downloadAPK(dlurl, name, overwrite)
 
-core.setOutput('filename', out);
-core.info(`${repo} Successfully downloaded to '${out}'!`);
+if (out)
+{
+    core.setOutput('filename', out);
+    core.info(`${repo} Successfully downloaded to '${out}'!`);
+}
